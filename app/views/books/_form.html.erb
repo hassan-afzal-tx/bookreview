@@ -1,0 +1,9 @@
+<%= simple_form_for @book, :html => {:multipart => true}  do |f| %>
+ 
+ <%= f.input :title, lable: "Book Title" %>
+ <%= f.rich_text_area :description %>
+ <%= f.input :author %>
+ <%= f.file_field :book_img %>
+ <%= select_tag(:category_id, options_for_select(@categories)) %>
+ <%= f.button :submit %>
+<% end %>

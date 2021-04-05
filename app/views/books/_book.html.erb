@@ -1,0 +1,21 @@
+ <% if user_signed_in? %>
+    <h4>
+     <div id="pop-up-div">
+         <%= link_to "Add New Book", new_book_path, remote: true %>        
+      </div>
+    </h4>
+ <% end %>
+<h1 class="current-category"><%= params[:category] %></h1>
+<% if @books.count == 0 %>
+    <h4>There are no books available<h4>
+<% else %>
+ <div class="row">
+  <% @books.each do |book| %>
+    <div class="col-md-3">
+       <a href="/books/<%= book.id %>">
+           <%= image_tag book.book_img.url(:book_index), class:"book" %>
+        </a>
+    </div>
+  <% end %>
+ </div>
+<% end %>

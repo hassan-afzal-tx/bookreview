@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookreview</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  
+  </head>
+
+  <body>
+  <nav class="navbar navbar-default">
+     <div class="container">
+        <div class="navbar-header">
+        <%= link_to "Book Review", root_path, class:"navbar-brand" %>
+        </div>
+         <ul class="nav navbar-nav navbar-right">
+         
+         <% if user_signed_in? %>
+           <li><%= link_to current_user.name, destroy_user_session_path, method: :delete %></li>
+         <% else %>
+           <li><%= link_to "logIn", new_user_session_path %></li>
+           <li><%= link_to "SignUp", new_user_registration_path %></li>
+         <% end %>
+         </ul>
+
+        <ul class="nav navbar-nav">
+          <li class="dropdown">
+             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <% Category.all.each do |category|%>
+              <li>
+                <%= link_to category.name, books_path(category: category.name), class: "link" %>
+              </li>
+              <% end %>
+           </ul>
+           <% if user_signed_in? %>
+             <li><%= link_to "Add New Book", new_book_path %></li>
+               
+               <% if current_user.admin == true %>
+                   <li><%= link_to "User Data Table", books_user_data_path %></li>             
+                 <% end %>
+
+            <% end %>
+
+          </li>
+          
+        </ul>
+        
+     </div>
+     
+   </nav> 
+   <p class="notice"><%= notice %></p>
+   <p class="alert"><%= alert %></p>
+
+   <div class="container">
+    <%= yield %>
+   </div>
+
+
+
+  </body>
+</html>
